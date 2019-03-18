@@ -1,27 +1,49 @@
 ---
 layout: default
+comments: true
 ---
-<article {% if page.feature-img %}class="feature-image"{% endif %}>
-  <header style="background-image: url('{{ site.baseurl }}/{{ page.feature-img }}')">
-    <h1 class="title">{{ page.title }}</h1>
-    {% if page.subtitle %}<h2 class="subtitle">{{ page.subtitle }}</h2>{% endif %}
-    <p class="meta">
-      {{ page.date | date: "%B %-d, %Y" }}
-      {% if page.author %} - {{ page.author }}{% endif %}
-    </p>
-  </header>
-  <section class="post-content">{{ content }}</section>
-  {% include tags_list.html tags=page.tags tag_count=page.tags.size %}
-</article>
 
-<!-- Disqus -->
-{% if site.theme_settings.disqus_shortname %}
-<div class="comments">
-  {% include disqus.html %}
+<div class="post">
+  
+  <div class="post-info">
+    <span>Written by</span>
+    {% if page.author %}
+        {{ page.author }}
+    {% else %}
+        {{ site.author.name }}
+    {% endif %}
+
+    {% if page.date %}
+      <br>
+      <span>on&nbsp;</span><time datetime="{{ page.date }}">{{ page.date | date: "%B %d, %Y" }}</time>
+    {% endif %}
+  </div>
+
+  <h1 class="post-title">{{ page.title }}</h1>
+  <div class="post-tags">
+    {% for tag in page.tags %}
+      <a href="{{site.baseurl}}/tags#{{tag}}">{{tag}}</a>
+    {% endfor %}
+  </div>
+  <div class="post-line"></div>
+
+  {{ content }}
+
 </div>
+
+{% if site.disqus_shortname %}
+  {% if page.hideComments != true %}
+    {% include disqus.html %}             
+  {% endif %}
 {% endif %}
 
-<!-- Post navigation -->
-{% if site.theme_settings.post_navigation %}
-  {% include post_nav.html %}
-{% endif %}
+<div class="pagination">
+  {% if page.next.url %}
+  <a href="{{ page.next.url | prepend: site.baseurl }}" class="left arrow">&#8592;  <span>{{page.next.title | truncate: 25 }}</span></a>
+  {% endif %}
+  {% if page.previous.url %}
+    <a href="{{ page.previous.url | prepend: site.baseurl }}" class="right arrow"><span>{{page.previous.title | truncate: 25 }}</span> &#8594;</a>
+  {% endif %}
+
+  <a href="#" class="top">Top</a>
+</div>

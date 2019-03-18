@@ -1,0 +1,77 @@
+.tags {
+  &-item {
+    color: $default-color;
+    display: inline-block;
+    padding: 0.7rem 1.2rem;
+    width: 100%;
+
+    &:hover .tags-line,
+    &:focus .tags-line {
+      width: 5rem;
+    }
+
+    &:last-child {
+      border: 0;
+    }
+  }
+
+  &-time {
+    color: $default-tint;
+    font-family: $serif-secondary;
+    letter-spacing: .5px;
+    font-size: 0.9rem;
+  }
+
+  &-title {
+    color: $default-shade;
+    display: block;
+    font-family: $sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  &-name {
+    color: $default-tint;
+    display: block;
+    font-family: $sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-top: 1em;
+
+    span {
+      font-size: 0.8rem;
+      font-weight: 300;
+
+    }
+  }
+
+  &-line {
+    // @include transition(all .3s ease-out);
+    border-top: .2rem solid $default-shade;
+    display: none;
+    width: 2rem;
+  }
+  &-list {
+    padding: 2em 0;
+    a {
+      border-radius: 0.3em;
+      border: 1px solid;
+      display: inline-block;
+      margin: 0.3em 0;
+      padding: 0.5em 0.75em;
+      font-size: 0.9em;
+  
+      &:hover,
+      &:focus {
+        @include transition(all .3s);
+        background: $a-color;
+        color: #ffffff;
+      }
+    }
+  }
+
+  p {
+    color: #353535;
+  }
+}

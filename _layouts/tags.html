@@ -1,31 +1,36 @@
 ---
-layout: page
+layout: default
 ---
 
 {% capture site_tags %}{% for tag in site.tags %}{{ tag | first }}{% unless forloop.last %},{% endunless %}{% endfor %}{% endcapture %}
 {% assign tag_words = site_tags | split:',' | sort %}
 
-<!-- cycles through tag list and creates subheader for each tag name -->
-{% for item in (0..site.tags.size) %}
-  {% unless forloop.last %}
-    {% capture this_word %}{{ tag_words[item] | strip_newlines }}{% endcapture %}
-    <h2 id="{{ this_word | cgi_escape }}" class="tag-title">
-      #{{ this_word }}
-    </h2>
-    <!-- lists all posts corresponding to specific tag -->
-    {% for post in site.tags[this_word] %}
-      {% if post.title != null %}
-        <div class="tagged-post">
-          <h3 class="title">
-            <a href="{{ post.url | relative_url }}">
-              {{ post.title }}
-            </a>
-          </h3>
-          <div class="meta">
-            {{ post.date | date: "%B %-d, %Y" }}
-          </div>
+<div class="tags">
+    <div class="tags-list">
+      {% for tag in tag_words %}
+      <a href="{{site.baseurl}}/tags#{{ tag | cgi_escape }}" class="button">{{tag}}</a>
+      {% endfor %}
+    </div>
+    {% for item in (0..site.tags.size) %}
+      {% unless forloop.last %}
+        {% capture this_word %}{{ tag_words[item] | strip_newlines }}{% endcapture %}
+        <div id="{{ this_word | cgi_escape }}" class="tags-name">
+          #{{ this_word }}
+          <span> ({{site.tags[this_word].size}})</span>
         </div>
-      {% endif %}
+        <!-- lists all posts corresponding to specific tag -->
+        {% for post in site.tags[this_word] %}
+          {% if post.title != null %}
+          <div class="tags-item">
+            <a href="{{ post.url | prepend: site.baseurl }}">
+              <div>
+                <time datetime="{{ post.date }}" class="tags-time">{{ post.date | date: "%B %d, %Y" }}</time>
+                <h1 class="tags-title">{{ post.title }}</h1>
+              </div>
+            </a>
+          </div>
+          {% endif %}
+        {% endfor %}
+      {% endunless %}
     {% endfor %}
-  {% endunless %}
-{% endfor %}
+</div>
